@@ -13,9 +13,8 @@ from flask_babel import Babel, lazy_gettext as _l
 import jinja2
 
 import blogsley.config
-#TODO:need to sort out getting config from cwd
-#from __blogsley__.config import Config
 from blogsley.config import Config
+from blogsley.db import create_db
 
 class Blogsley(Flask):
     def __init__(self, name, **kwargs):
@@ -87,6 +86,7 @@ def create_app(config=None, environment=None):
     #sockets.register_blueprint(ws)
     from graphql_ws.gevent import GeventSubscriptionServer
     from blogsley.schema import schema
+
     subscription_server = GeventSubscriptionServer(schema)
 
     @sockets.route('/graphql/')

@@ -1,10 +1,6 @@
 from blogsley.app import create_app
-'''
-from blogsley.config import app, db
-from blogsley.models.users import User
-from blogsley.models.blog import Post
-import arrow
 
+'''
 #TODO: I'm using a factory now.  Where should this go?
 
 @app.template_filter('humanize')

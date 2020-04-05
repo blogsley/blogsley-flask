@@ -13,4 +13,4 @@ rm app.db
 flask db migrate
 flask db upgrade
 
-python populate.py
+python blogsley/command/populate.py

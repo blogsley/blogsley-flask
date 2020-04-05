@@ -10,7 +10,7 @@ class Post(db.Model):
     status = db.Column(db.String(16))
     title = db.Column(db.String(256))
     slug = db.Column(db.String(256))
-    model = db.Column(db.Text)
+    block = db.Column(db.Text)
     cover = db.Column(db.String(256))
     body = db.Column(db.Text)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow())
