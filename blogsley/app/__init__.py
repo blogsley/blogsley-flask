@@ -1,6 +1,8 @@
 import os
 import sys
 
+from loguru import logger
+
 from flask import Flask, current_app
 
 from flask_sqlalchemy import SQLAlchemy
@@ -76,7 +78,7 @@ def create_app(config=None, environment=None):
     @blogsley.config.login.user_loader
     def load_user(id):
         return User.query.get(int(id))
-    
+        
     #GraphQL Subscriptions
     app.app_protocol = lambda environ_path_info: 'graphql-ws'
     from blogsley.sockets import Sockets
@@ -86,7 +88,7 @@ def create_app(config=None, environment=None):
     #sockets.register_blueprint(ws)
     from graphql_ws.gevent import GeventSubscriptionServer
     from blogsley.schema import schema
-
+    #logger.debug(f"schema: {schema}")
     subscription_server = GeventSubscriptionServer(schema)
 
     @sockets.route('/graphql/')

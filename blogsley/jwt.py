@@ -1,5 +1,7 @@
 import jwt
 import datetime
+from loguru import logger
+
 from blogsley.config import app
 from blogsley.models.users import User
 
@@ -19,15 +21,14 @@ def encode_auth_token(**kwargs):
 
 def load_user(info):
     token = decode_auth_token(info.context)
-    print(token)
+    logger.debug(f"token: {token}")
     return User.query.get(token['id'])
 
 def decode_auth_token(request):
     auth_token = request.headers.get('Authorization')
-    print('decode')
-    print(auth_token)
+    logger.debug(f"auth_token: {auth_token}")
     secret = app.config.get('SECRET_KEY')
-    print(secret)
+    logger.debug(f"secret: {secret}")
     if not auth_token:
         auth_token = ''
     try:

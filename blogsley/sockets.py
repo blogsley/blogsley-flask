@@ -3,6 +3,7 @@ from werkzeug.exceptions import NotFound
 from werkzeug.http import parse_cookie
 from flask import request
 
+from loguru import logger
 
 # Monkeys are made for freedom.
 try:
@@ -26,6 +27,8 @@ class SocketMiddleware(object):
         adapter = self.ws.url_map.bind_to_environ(environ)
         try:
             handler, values = adapter.match()
+            #logger.debug(f"handler: {handler}")
+            #logger.debug(f"environ: {environ}")
             environment = environ['wsgi.websocket']
             cookie = None
             if 'HTTP_COOKIE' in environ:
@@ -35,7 +38,7 @@ class SocketMiddleware(object):
                 with self.app.request_context(environ):
                     # add cookie to the request to have correct session handling
                     request.cookie = cookie
-                    print('ws')
+                    logger.debug(f"cookie: {cookie}")
                     handler(environment, **values)
                     return []
         except (NotFound, KeyError):
