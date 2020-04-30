@@ -1,3 +1,7 @@
+#
+# https://github.com/heroku-python/flask-sockets
+#
+
 from werkzeug.routing import Map, Rule
 from werkzeug.exceptions import NotFound
 from werkzeug.http import parse_cookie

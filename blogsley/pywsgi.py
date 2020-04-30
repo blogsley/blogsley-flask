@@ -1,15 +1,6 @@
 from gevent import monkey
 monkey.patch_all()
 
-'''
-from gevent import pywsgi
-from geventwebsocket.handler import WebSocketHandler
-
-def run(app):
-    server = pywsgi.WSGIServer(('', 5000), app, handler_class=WebSocketHandler)
-    server.serve_forever()
-'''
-
 from gevent import pywsgi
 from geventwebsocket.handler import WebSocketHandler
 
@@ -26,12 +17,11 @@ WebSocket connection to 'ws://localhost:5000/subscriptions' failed: Error during
 Sent non-empty 'Sec-WebSocket-Protocol' header but no response was received
 '''
 def run_server(app):
-    server = pywsgi.WSGIServer(('0.0.0.0', 5000), app,
-                               handler_class=WebSocketHandler)
+    server = pywsgi.WSGIServer(('0.0.0.0', 5000), app, handler_class=WebSocketHandler)
     server.serve_forever()
 
 def debug_server(app):
-    server = pywsgi.WSGIServer(('', 5000), DebuggedApplication(app), handler_class=WebSocketHandler)
+    server = pywsgi.WSGIServer(('0.0.0.0', 5000), DebuggedApplication(app), handler_class=WebSocketHandler)
     server.serve_forever()
 
 def run(app):

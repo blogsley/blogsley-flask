@@ -84,18 +84,19 @@ def create_app(config=None, environment=None):
     from blogsley.sockets import Sockets
     sockets = Sockets(app)
     from blogsley.graphql.subscription import bp as ws
-    #sockets.register_blueprint(ws, url_prefix=r'/')
+    sockets.register_blueprint(ws, url_prefix=r'/')
     #sockets.register_blueprint(ws)
+    '''
+
     from graphql_ws.gevent import GeventSubscriptionServer
     from blogsley.schema import schema
     #logger.debug(f"schema: {schema}")
     subscription_server = GeventSubscriptionServer(schema)
-
     @sockets.route('/graphql/')
     def echo_socket(ws):
         print('echo')
         subscription_server.handle(ws)
         return []
-
+    '''
     return app
     

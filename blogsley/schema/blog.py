@@ -132,27 +132,22 @@ class Query(graphene.ObjectType):
         return query.filter_by(slug=slug).first()
 
 
-class PostChange(graphene.ObjectType):
+class PostEvent(graphene.ObjectType):
     kind = graphene.String()
-    def __init__(self, kind='UPDATE'):
+    def __init__(self, id, kind='UPDATE'):
         super().__init__()
+        '''
+        self.id = id
+        self.kind = kind
+        '''
 
-#############
 def push_post(observer):
-    observer.on_next(PostChange('UPDATE'))
+    observer.on_next(PostEvent(0, 'UPDATE'))
 
 class Subscription(graphene.ObjectType):
-    post = graphene.Field(PostChange, id=graphene.ID())
-    def resolve_post(root, info, id=None):
-        print('post subscription')
+    post_events = graphene.Field(PostEvent, id=graphene.ID())
+    def resolve_post_events(root, info, id=None):
+        print('post events subscription')
         source = Observable.create(push_post)
         print(source)
         return source
-    '''
-    count_seconds = graphene.Int(up_to=graphene.Int())
-
-    def resolve_count_seconds(root, info, up_to=5):
-        return Observable.interval(1000)\
-                            .map(lambda i: "{0}".format(i))\
-                            .take_while(lambda i: int(i) <= up_to)
-    '''
