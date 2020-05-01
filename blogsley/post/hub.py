@@ -2,7 +2,7 @@ from loguru import logger
 
 import graphene
 
-from blogsley.hub import Hub, Subscriber, Event
+from blogsley.hub import Hub, Subscriber
 
 hub = Hub()
 
