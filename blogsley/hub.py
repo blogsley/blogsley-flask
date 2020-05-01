@@ -1,27 +1,18 @@
-import asyncio
-
-
-class Message:
-    pass
-
-
-class Event(Message):
-    def __init__(self, id, kind='default', ok=True):
-        self.id = id
-        self.kind = kind
-        self.ok = ok
-
+import gevent
 
 class Subscriber:
-    def __init__(self):
-        self.queue = asyncio.Queue()
+    def __init__(self, observer):
+        self.observer = observer
+        self.queue = gevent.queue.Queue()
         self.active = True
 
     def send(self, msg):
-        pass
+        #logger.debug(f"msg: {msg}")
+        #self.queue.put(msg)
+        self.observer.on_next(msg)
 
-    async def receive(self):
-        await self.queue.get()
+    def receive(self):
+        self.queue.get()
 
 class Hub:
     def __init__(self):
@@ -30,9 +21,9 @@ class Hub:
     def subscribe(self, subscriber):
         self.subscribers.append(subscriber)
 
-    async def send(self, msg):
-        asyncio.create_task(self.publish(msg))
+    def send(self, msg):
+        gevent.spawn(self.publish(msg))
 
-    async def publish(self, msg):
+    def publish(self, msg):
         for subscriber in self.subscribers:
-            await subscriber.send(msg)
+            subscriber.send(msg)

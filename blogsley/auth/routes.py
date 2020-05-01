@@ -5,9 +5,8 @@ from flask_babel import _
 from blogsley.config import db
 from blogsley.jwt import encode_auth_token
 from blogsley.auth import bp
-from blogsley.auth.forms import LoginForm, RegistrationForm, \
-    ResetPasswordRequestForm, ResetPasswordForm
-from blogsley.models.users import User
+from blogsley.auth.forms import LoginForm, RegistrationForm, ResetPasswordRequestForm, ResetPasswordForm
+from blogsley.user import User
 from blogsley.auth.emails import send_password_reset_email
 
 

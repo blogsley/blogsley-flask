@@ -1,10 +1,12 @@
 import graphene
 from graphene import relay
 from graphene_sqlalchemy import SQLAlchemyObjectType, SQLAlchemyConnectionField
+
 from blogsley.config import db
-from blogsley.models.users import User
-from blogsley.models.images import Image
 from blogsley.jwt import decode_auth_token, load_user
+from blogsley.user import User
+
+from .entity import Image
 
 class ImageNode(SQLAlchemyObjectType):
     class Meta:

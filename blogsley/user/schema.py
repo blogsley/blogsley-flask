@@ -4,8 +4,9 @@ from graphene import relay
 from graphql_relay import to_global_id
 from graphene_sqlalchemy import SQLAlchemyObjectType, SQLAlchemyConnectionField
 from blogsley.config import db
-from blogsley.models.users import User
-from blogsley.models.blog import Post
+
+from .entity import User
+from blogsley.post import Post
 
 from blogsley.jwt import encode_auth_token, decode_auth_token
 

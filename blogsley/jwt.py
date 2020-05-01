@@ -3,7 +3,7 @@ import datetime
 from loguru import logger
 
 from blogsley.config import app
-from blogsley.models.users import User
+from blogsley.user import User
 
 def encode_auth_token(**kwargs):
     payload = {

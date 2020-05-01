@@ -1,8 +1,8 @@
 from flask import render_template, request, current_app
 from flask_login import current_user, login_required, login_user, logout_user
 from flask_babel import _
-from blogsley.models.users import User
-from blogsley.models.blog import Post
+from blogsley.user import User
+from blogsley.post import Post
 from blogsley.root.forms import EditProfileForm, PostForm, SearchForm, ContactForm
 from blogsley.root import bp
 

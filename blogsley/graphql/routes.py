@@ -23,10 +23,10 @@ bp.add_url_rule(
     '/graphql/',
     view_func=GraphQLView.as_view(
         'graphql',
-        backend=CustomBackend(),
+        #backend=CustomBackend(),
         schema=schema,
         graphiql=True,
         graphiql_template=TEMPLATE,
-        subscriptions=True
+        #subscriptions=True
     )
 )

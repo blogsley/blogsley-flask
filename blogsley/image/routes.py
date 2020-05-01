@@ -6,9 +6,9 @@ from werkzeug.utils import secure_filename
 from werkzeug.urls import url_parse
 from blogsley.config import app, db
 from blogsley.jwt import encode_auth_token
-from blogsley.images import bp
-from blogsley.models.users import User
-from blogsley.models.images import Image as Img
+from blogsley.image import bp
+from blogsley.user import User
+from blogsley.image import Image as Img
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
