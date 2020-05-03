@@ -2,8 +2,8 @@ import os
 
 from setuptools import setup, find_packages
 
-from blogsley_setup.install import install
-from blogsley_setup.develop import develop
+from _setup.install import install
+from _setup.develop import develop
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
@@ -11,20 +11,20 @@ with open("README.md", "r") as fh:
 with open('requirements.txt') as f:
     requirements = f.read().splitlines()
 
-datadir = 'share/blogsley'
+datadir = 'share/blogsley-flask'
 data_files = [(d, [os.path.join(d,f) for f in files])
     for d, folders, files in os.walk(datadir)]
 
 packages = find_packages(exclude=["__blogsley__", "tests"])
 
 setup(
-    name='blogsley',
+    name='blogsley-flask',
     packages=packages,
     include_package_data=True,
     data_files=data_files,
     use_scm_version = {
         "local_scheme": "no-local-version",
-        'write_to': 'blogsley/version.py',
+        'write_to': 'blogsley_flask/version.py',
         'write_to_template': 'version = "{version}"',
         'tag_regex': r'^(?P<prefix>v)?(?P<version>[^\+]+)(?P<suffix>.*)?$'
     },
@@ -34,13 +34,13 @@ setup(
         'develop': develop
     },
     install_requires=requirements,
-    entry_points={"console_scripts": ["blogsley = blogsley.command:cli"]},
+    entry_points={"console_scripts": ["blogsley = blogsley_flask.command:cli"]},
     author="Kurtis Fields",
     author_email="kurtisfields@gmail.com",
     description="Web Publishing Evolved",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/blogsley/blogsley",
+    url="https://github.com/blogsley/blogsley-flask",
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",

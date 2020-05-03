@@ -1,4 +1,4 @@
-from blogsley.app import create_app
+from blogsley_flask.app import create_app
 
 '''
 #TODO: I'm using a factory now.  Where should this go?

@@ -8,9 +8,9 @@
 find . -path "*/migrations/versions/*.py" -not -path "env/*" -not -name "__init__.py" -delete
 find . -path "*/migrations/versions/*.pyc"  -not -path "env/*" -delete
 
-rm share/blogsley/blogsley.db
+rm share/blogsley_flask/blogsley.db
 
 flask db migrate
 flask db upgrade
 
-python blogsley/command/populate.py
+python blogsley_flask/command/populate.py

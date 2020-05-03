@@ -1,4 +1,4 @@
-from blogsley import __version__
+from blogsley_flask import __version__
 
 
 def test_version():

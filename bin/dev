@@ -5,6 +5,6 @@
 #
 ####################################
 
-export FLASK_APP="blogsley:create_app('dev')"
+export FLASK_APP="blogsley_flask:create_app('dev')"
 export FLASK_ENV=development
 flask run

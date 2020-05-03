@@ -4,7 +4,7 @@ from app import create_app
 app = create_app()
 
 #TODO: This has to be import after the app is created.  Smelly
-from blogsley.schema import schema
+from blogsley_flask.schema import schema
 
 if __name__ == "__main__":
     from gevent import pywsgi
