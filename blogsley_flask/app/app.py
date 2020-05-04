@@ -51,8 +51,8 @@ class BlogsleyFlask(Flask):
         from blogsley_flask.root import bp as root_bp
         app.register_blueprint(root_bp)
 
-        from blogsley_flask.dash import bp as dash_bp
-        app.register_blueprint(dash_bp, url_prefix='/dash')
+        from blogsley_flask.admin import bp as admin_bp
+        app.register_blueprint(admin_bp, url_prefix='/admin')
 
         from blogsley_flask.image import bp as image_bp
         app.register_blueprint(image_bp, url_prefix='/images')
