@@ -1,10 +1,11 @@
 import json
+from loguru import logger
 import graphene
 from graphene import relay
 from graphql_relay import to_global_id
 from graphene_sqlalchemy import SQLAlchemyObjectType, SQLAlchemyConnectionField
-from blogsley_flask.config import db
 
+from __blogsley__ import db
 from .entity import User
 from blogsley_flask.post import Post
 
@@ -37,9 +38,10 @@ class Login(graphene.Mutation):
 
     @staticmethod
     def mutate(self, info, data=None):
-        print('Login')
         username=data.username
         password=data.password
+
+        logger.info(f"login: {username}, {password}")
 
         if not username:
             raise Exception('Username missing!')
@@ -52,10 +54,9 @@ class Login(graphene.Mutation):
 
         # Identity can be any data that is json serializable
         access_token = encode_auth_token(sub=username, id=user.id)
-        print(access_token)
         # token = json.dumps({"token": access_token.decode('utf-8')})
         token = access_token.decode('utf-8')
-        print(token)
+        logger.info(f"token: {token}")
         return Login(token=token)
 
 class CreateUser(graphene.Mutation):

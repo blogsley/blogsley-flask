@@ -7,7 +7,7 @@ from flask.cli import FlaskGroup
 
 import flask_migrate
 
-import blogsley_flask.config
+import __blogsley__
 
 import blogsley_flask.pywsgi
 #TODO:Put these commands into seperate files and lazy load/deferred import
@@ -45,7 +45,7 @@ def dev(ctx):
     app = ctx.obj._loaded_app
     #os.environ["FLASK_ENV"] = "development"
     os.environ["FLASK_ENV"] = "debug"
-    blogsley_flask.config.debug = app.debug = True
+    __blogsley__.debug = app.debug = True
     logger.debug(f"ctx.obj: {vars(ctx.obj)}")
     #ctx.obj._loaded_app.run(debug=True)
     blogsley_flask.pywsgi.run(app)

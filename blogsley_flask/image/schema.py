@@ -2,7 +2,7 @@ import graphene
 from graphene import relay
 from graphene_sqlalchemy import SQLAlchemyObjectType, SQLAlchemyConnectionField
 
-from blogsley_flask.config import db
+from __blogsley__ import db
 from blogsley_flask.jwt import decode_auth_token, load_user
 from blogsley_flask.user import User
 

@@ -5,7 +5,7 @@ if __name__ == "__main__":
     from blogsley_flask.app import create_app
     app = create_app()
 
-from blogsley_flask.config import db
+from __blogsley__ import db
 from blogsley_flask.models.users import User
 from blogsley_flask.models.blog import Post
 

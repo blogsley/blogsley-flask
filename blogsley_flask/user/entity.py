@@ -1,7 +1,7 @@
 from hashlib import md5
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-from blogsley_flask.config import db, login
+from __blogsley__ import db, login
 
 '''
 @login.user_loader

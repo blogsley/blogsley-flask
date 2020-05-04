@@ -3,7 +3,7 @@ from sqlalchemy import event
 from slugify import slugify
 from bs4 import BeautifulSoup
 
-from blogsley_flask.config import db
+from __blogsley__ import db
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)

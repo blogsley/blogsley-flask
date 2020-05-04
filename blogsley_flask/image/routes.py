@@ -4,7 +4,7 @@ from PIL import Image
 from io import BytesIO
 from werkzeug.utils import secure_filename
 from werkzeug.urls import url_parse
-from blogsley_flask.config import app, db
+from __blogsley__ import app, db
 from blogsley_flask.jwt import encode_auth_token
 from blogsley_flask.image import bp
 from blogsley_flask.user import User

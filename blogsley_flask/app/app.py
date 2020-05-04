@@ -14,8 +14,9 @@ from flask_babel import Babel, lazy_gettext as _l
 
 import jinja2
 
-import blogsley_flask.config
-from blogsley_flask.config import Config
+import __blogsley__
+from __blogsley__ import Config
+
 from blogsley_flask.db import create_db
 
 class BlogsleyFlask(Flask):
@@ -24,34 +25,37 @@ class BlogsleyFlask(Flask):
 
     @classmethod
     def create(self, config=None, environment=None):
-        share_folder = blogsley_flask.config.share_folder
-        db_folder = blogsley_flask.config.db_folder
-        static_folder = blogsley_flask.config.static_folder
+        share_folder = __blogsley__.share_folder
+        db_folder = __blogsley__.db_folder
+        static_folder = __blogsley__.static_folder
         logger.info(f"static_folder: {static_folder}")
 
         static_url_path = ''
 
-        blogsley_flask.config.app = app = BlogsleyFlask(self.__name__, static_url_path=static_url_path, static_folder=static_folder)
+        __blogsley__.app = app = BlogsleyFlask(self.__name__, static_url_path=static_url_path, static_folder=static_folder)
         app.config.from_object(Config)
 
-        blogsley_flask.config.db = db = SQLAlchemy(app)
-        blogsley_flask.config.migrate = migrate = Migrate(app, db)
+        __blogsley__.db = db = SQLAlchemy(app)
+        __blogsley__.migrate = migrate = Migrate(app, db)
 
-        blogsley_flask.config.login = login = LoginManager(app)
+        __blogsley__.login = login = LoginManager(app)
         login.login_view = 'auth.login'
         login.login_message = 'Please log in to access this page.'
 
-        blogsley_flask.config.mail = mail = Mail(app)
-        blogsley_flask.config.babel = babel = Babel(app)
+        __blogsley__.mail = mail = Mail(app)
+        __blogsley__.babel = babel = Babel(app)
 
         from blogsley_flask.auth import bp as auth_bp
         app.register_blueprint(auth_bp, url_prefix='/auth')
 
-        from blogsley_flask.image import bp as image_bp
-        app.register_blueprint(image_bp, url_prefix='/images')
-
         from blogsley_flask.root import bp as root_bp
         app.register_blueprint(root_bp)
+
+        from blogsley_flask.dash import bp as dash_bp
+        app.register_blueprint(dash_bp, url_prefix='/dash')
+
+        from blogsley_flask.image import bp as image_bp
+        app.register_blueprint(image_bp, url_prefix='/images')
 
         from blogsley_flask.graphql import bp as graphql_bp
         app.register_blueprint(graphql_bp)
@@ -79,7 +83,7 @@ def create_app(config=None, environment=None):
 
     #Configure Login
     from blogsley_flask.user import User
-    @blogsley_flask.config.login.user_loader
+    @__blogsley__.login.user_loader
     def load_user(id):
         return User.query.get(int(id))
         

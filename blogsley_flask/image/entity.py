@@ -1,6 +1,6 @@
 from datetime import datetime
 from slugify import slugify
-from blogsley_flask.config import db
+from __blogsley__ import db
 
 class Image(db.Model):
     id = db.Column(db.Integer, primary_key=True)

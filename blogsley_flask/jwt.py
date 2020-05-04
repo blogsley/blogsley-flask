@@ -2,7 +2,7 @@ import jwt
 import datetime
 from loguru import logger
 
-from blogsley_flask.config import app
+from __blogsley__ import app
 from blogsley_flask.user import User
 
 def encode_auth_token(**kwargs):

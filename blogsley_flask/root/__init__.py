@@ -1,7 +1,7 @@
 from flask import Blueprint
 
-import blogsley_flask.config
+import __blogsley__
 
-bp = Blueprint('root', __name__, template_folder=blogsley_flask.config.static_folder)
+bp = Blueprint('root', __name__, template_folder=__blogsley__.static_folder)
 
 from .routes import *
