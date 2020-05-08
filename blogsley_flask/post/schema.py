@@ -137,14 +137,14 @@ class Query(graphene.ObjectType):
     post_by = graphene.Field(PostNode, slug=graphene.String())
     # post_by = graphene.Field(lambda: graphene.List(PostNode), slug=graphene.String())
 
-    def resolve_post_by(parent, info, slug):
+    def resolve_post_by(self, info, slug):
         query = PostNode.get_query(info)  # SQLAlchemy query
         return query.filter_by(slug=slug).first()
 
 
 class Subscription(graphene.ObjectType):
     post_events = graphene.Field(PostEvent, id=graphene.ID())
-    def resolve_post_events(root, info, id=None):
+    def resolve_post_events(self, info, id=None):
         logger.debug('post events subscription')
         def push_post(observer):
             logger.debug('subscribe to post')

@@ -19,6 +19,9 @@ class CustomBackend(GraphQLCoreBackend):
         super().__init__(executor)
         self.execute_params['allow_subscriptions'] = True
 
+
+#from .sentry import Sentry
+
 bp.add_url_rule(
     '/graphql/',
     view_func=GraphQLView.as_view(
@@ -28,5 +31,6 @@ bp.add_url_rule(
         graphiql=True,
         graphiql_template=TEMPLATE,
         #subscriptions=True
+        #middleware = [Sentry()]
     )
 )

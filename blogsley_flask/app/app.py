@@ -45,6 +45,9 @@ class BlogsleyFlask(Flask):
         __blogsley__.mail = mail = Mail(app)
         __blogsley__.babel = babel = Babel(app)
 
+        from blogsley_flask.iam import IAM
+        __blogsley__.iam = iam = IAM(app)
+        
         from blogsley_flask.auth import bp as auth_bp
         app.register_blueprint(auth_bp, url_prefix='/auth')
 
@@ -59,7 +62,7 @@ class BlogsleyFlask(Flask):
 
         from blogsley_flask.graphql import bp as graphql_bp
         app.register_blueprint(graphql_bp)
-
+        
         app.app_protocol = lambda environ_path_info: 'graphql-ws'
         from blogsley_flask.sockets import Sockets
         sockets = Sockets(app)

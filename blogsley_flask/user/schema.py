@@ -5,7 +5,7 @@ from graphene import relay
 from graphql_relay import to_global_id
 from graphene_sqlalchemy import SQLAlchemyObjectType, SQLAlchemyConnectionField
 
-from __blogsley__ import db
+from __blogsley__ import db, iam
 from .entity import User
 from blogsley_flask.post import Post
 
@@ -25,6 +25,7 @@ class UserInput(graphene.InputObjectType):
     email = graphene.String()
     first_name = graphene.String()
     last_name = graphene.String()
+    password = graphene.String()
 
 class LoginInput(graphene.InputObjectType):
     username = graphene.String()
@@ -53,7 +54,7 @@ class Login(graphene.Mutation):
             raise Exception('No such user or invalid password!')
 
         # Identity can be any data that is json serializable
-        access_token = encode_auth_token(sub=username, id=user.id)
+        access_token = encode_auth_token(sub=username, id=user.id, role=user.role)
         # token = json.dumps({"token": access_token.decode('utf-8')})
         token = access_token.decode('utf-8')
         logger.info(f"token: {token}")
@@ -66,6 +67,7 @@ class CreateUser(graphene.Mutation):
     id = graphene.ID()
 
     @staticmethod
+    @iam.requires('Admin')
     def mutate(self, info, data=None):
         print('CreateUser')
         user = User(
@@ -76,7 +78,7 @@ class CreateUser(graphene.Mutation):
             # role='Reader',
             # about_me='I am a Reader'
         )
-        # user.set_password(password)
+        user.set_password(data.password)
         db.session.add(user)
         db.session.commit()
         db.session.refresh(user)
@@ -91,6 +93,7 @@ class UpdateUser(graphene.Mutation):
     ok = graphene.Boolean()
 
     @staticmethod
+    @iam.requires('Admin')
     def mutate(self, info, _id, data=None):
         print('UpdateUser')
         print(_id)
@@ -110,6 +113,7 @@ class DeleteUser(graphene.Mutation):
     ok = graphene.Boolean()
 
     @staticmethod
+    @iam.requires('Admin')
     def mutate(self, info, id):
         # get the JWT
         token = decode_auth_token(info.context)

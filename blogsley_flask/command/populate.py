@@ -50,7 +50,7 @@ block = """
       "_value": null,
       "html": "",
       "children": [],
-      "src": "statics/images/journal-on-desk.jpg",
+      "src": "/img/journal-on-desk.jpg",
       "width": 256,
       "height": 256
     },

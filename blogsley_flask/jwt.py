@@ -1,4 +1,5 @@
 import jwt
+import json
 import datetime
 from loguru import logger
 
@@ -26,6 +27,8 @@ def load_user(info):
 
 def decode_auth_token(request):
     auth_token = request.headers.get('Authorization')
+    if not auth_token or auth_token == 'null':
+        return None
     logger.debug(f"auth_token: {auth_token}")
     secret = app.config.get('SECRET_KEY')
     logger.debug(f"secret: {secret}")
@@ -33,6 +36,7 @@ def decode_auth_token(request):
         auth_token = ''
     try:
         payload = jwt.decode(auth_token, app.config.get('SECRET_KEY'))
+        #payload = json.loads(payloads)
         return payload
     except jwt.ExpiredSignatureError:
         return 'Signature expired. Please log in again.'
