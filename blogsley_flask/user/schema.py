@@ -67,7 +67,7 @@ class CreateUser(graphene.Mutation):
     id = graphene.ID()
 
     @staticmethod
-    @iam.requires('Admin')
+    @iam.needs('Admin')
     def mutate(self, info, data=None):
         print('CreateUser')
         user = User(
@@ -93,7 +93,7 @@ class UpdateUser(graphene.Mutation):
     ok = graphene.Boolean()
 
     @staticmethod
-    @iam.requires('Admin')
+    @iam.needs('Admin')
     def mutate(self, info, _id, data=None):
         print('UpdateUser')
         print(_id)
@@ -113,7 +113,7 @@ class DeleteUser(graphene.Mutation):
     ok = graphene.Boolean()
 
     @staticmethod
-    @iam.requires('Admin')
+    @iam.needs('Admin')
     def mutate(self, info, id):
         # get the JWT
         token = decode_auth_token(info.context)

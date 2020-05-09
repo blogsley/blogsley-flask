@@ -60,13 +60,13 @@ class IAM:
     def teardown(self, exception):
         ctx = _app_ctx_stack.top
 
-    def requires(self, role_name):
+    def needs(self, role_name):
         role = roles[role_name]
         def decorator(fn):
             @wraps(fn)
             def wrapper(*args, **kwargs):
                 if not isinstance(g.identity, role):
-                    raise AuthorizationException(f"requires role: {role_name}")
+                    raise AuthorizationException(f"needs role: {role_name}")
                 return fn(*args, **kwargs)
             return wrapper
         return decorator
