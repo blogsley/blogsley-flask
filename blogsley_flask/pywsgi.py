@@ -1,3 +1,5 @@
+from loguru import logger
+
 from gevent import monkey
 monkey.patch_all()
 
@@ -26,6 +28,7 @@ def debug_server(app):
 
 def run(app):
     if app.debug:
+        logger.info('blogsley running in debug mode')
         def debugfn():
             debug_server(app)
         run_with_reloader(debugfn)

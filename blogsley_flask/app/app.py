@@ -14,6 +14,7 @@ from flask_babel import Babel, lazy_gettext as _l
 
 import jinja2
 
+sys.path.insert(0,'.')
 import __blogsley__
 from __blogsley__ import Config
 

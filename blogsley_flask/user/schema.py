@@ -53,9 +53,7 @@ class Login(graphene.Mutation):
         if user is None or not user.check_password(password):
             raise Exception('No such user or invalid password!')
 
-        # Identity can be any data that is json serializable
         access_token = encode_auth_token(sub=username, id=user.id, role=user.role)
-        # token = json.dumps({"token": access_token.decode('utf-8')})
         token = access_token.decode('utf-8')
         logger.info(f"token: {token}")
         return Login(token=token)
@@ -95,10 +93,8 @@ class UpdateUser(graphene.Mutation):
     @staticmethod
     @iam.needs('Admin')
     def mutate(self, info, _id, data=None):
-        print('UpdateUser')
-        print(_id)
         user = graphene.Node.get_node_from_global_id(info, _id)
-        print(user)
+        logger.debug(f"user: {user}")
         user.username = data.username
         user.email = data.email
         user.save()
@@ -115,11 +111,8 @@ class DeleteUser(graphene.Mutation):
     @staticmethod
     @iam.needs('Admin')
     def mutate(self, info, id):
-        # get the JWT
-        token = decode_auth_token(info.context)
-        print(token)
         user = graphene.Node.get_node_from_global_id(info, id)
-        print(user)
+        logger.debug(f"user: {user}")
         db.session.delete(user)
         db.session.commit()
         ok = True
