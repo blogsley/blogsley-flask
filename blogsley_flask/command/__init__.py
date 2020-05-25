@@ -10,9 +10,6 @@ import flask_migrate
 import __blogsley__
 
 import blogsley_flask.pywsgi
-#TODO:Put these commands into seperate files and lazy load/deferred import
-#from blogsley_flask.command.populate import populate as do_populate
-
 
 @click.group(cls=FlaskGroup)
 @click.pass_context
@@ -53,5 +50,6 @@ def dev(ctx):
 @cli.command()
 @click.pass_context
 def populate(ctx):
+    from blogsley_flask.command.populate import populate as do_populate
     logger.debug(f"ctx.obj: {vars(ctx.obj)}")
     do_populate()

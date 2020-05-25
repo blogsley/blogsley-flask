@@ -1,13 +1,12 @@
 if __name__ == "__main__":
     import sys, os
-    #sys.path.append(os.path.join(os.path.abspath(os.path.dirname(__file__)), '../../'))
     sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
     from blogsley_flask.app import create_app
     app = create_app()
 
 from __blogsley__ import db
-from blogsley_flask.models.users import User
-from blogsley_flask.models.blog import Post
+from blogsley_flask.user import User
+from blogsley_flask.post import Post
 
 block = """
 {
