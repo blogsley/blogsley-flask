@@ -1,3 +1,4 @@
+import os
 from loguru import logger
 
 from gevent import monkey
@@ -7,6 +8,7 @@ from gevent import pywsgi
 from geventwebsocket.handler import WebSocketHandler
 
 # https://coderwall.com/p/q2mrbw/gevent-with-debug-support-for-flask
+
 from werkzeug.serving import run_with_reloader
 from werkzeug.debug import DebuggedApplication
 
@@ -18,24 +20,22 @@ from werkzeug.debug import DebuggedApplication
 WebSocket connection to 'ws://localhost:5000/subscriptions' failed: Error during WebSocket handshake:
 Sent non-empty 'Sec-WebSocket-Protocol' header but no response was received
 '''
-def run_server(app):
-    server = pywsgi.WSGIServer(('0.0.0.0', 5000), app, handler_class=WebSocketHandler)
+def run_server(app, port):
+    server = pywsgi.WSGIServer(('0.0.0.0', port), app, handler_class=WebSocketHandler)
     server.serve_forever()
 
-def debug_server(app):
-    server = pywsgi.WSGIServer(('0.0.0.0', 5000), DebuggedApplication(app), handler_class=WebSocketHandler)
+def debug_server(app, port):
+    server = pywsgi.WSGIServer(('0.0.0.0', port), DebuggedApplication(app), handler_class=WebSocketHandler)
     server.serve_forever()
 
-def run(app):
+def run(app, port):
     if app.debug:
         logger.info('blogsley running in debug mode')
         def debugfn():
-            debug_server(app)
+            debug_server(app, port)
         run_with_reloader(debugfn)
     else:
-        run_server(app)
+        run_server(app, port)
 
 if __name__ == "__main__":
-    #from app import create_app
-    #app = create_app()
     run(app)

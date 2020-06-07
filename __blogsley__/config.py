@@ -46,7 +46,7 @@ class Config:
     if os.environ.get("DOKKU_APP_TYPE"):
         MEDIA_ROOT = '/storage/media'
     else:
-        MEDIA_ROOT = basedir + '/public/media'
+        MEDIA_ROOT = f'{share_folder}/media'
 
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-will-never-guess'
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
