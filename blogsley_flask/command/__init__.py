@@ -21,8 +21,8 @@ def cli(info, port):
     os.environ["FLASK_RUN_FROM_CLI"] = "false"
 
 @cli.command()
-@click.pass_context
-def init(ctx):
+@pass_script_info
+def init(info):
     flask_migrate.init()
     flask_migrate.migrate()
     flask_migrate.upgrade()
@@ -34,23 +34,20 @@ def init(ctx):
 def run(info):
     app = info._loaded_app
     os.environ["FLASK_ENV"] = "production"
-    #logger.debug(f"ctx.obj: {vars(ctx.obj)}")
-    port = info.data['port']
+    port = int(os.environ.get("PORT", info.data['port']))
     blogsley_flask.pywsgi.run(app, port)
 
 @cli.command()
-@click.pass_context
-def dev(ctx):
-    app = ctx.obj._loaded_app
+@pass_script_info
+def dev(info):
+    app = info._loaded_app
     os.environ["FLASK_ENV"] = "debug"
     __blogsley__.debug = app.debug = True
-    logger.debug(f"ctx.obj: {vars(ctx.obj)}")
-    port = ctx.obj.data['port']
+    port = int(os.environ.get("PORT", info.data['port']))
     blogsley_flask.pywsgi.run(app, port)
 
 @cli.command()
-@click.pass_context
-def populate(ctx):
+@pass_script_info
+def populate(info):
     from blogsley_flask.command.populate import populate as do_populate
-    logger.debug(f"ctx.obj: {vars(ctx.obj)}")
     do_populate()
