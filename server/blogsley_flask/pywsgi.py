@@ -17,7 +17,7 @@ from werkzeug.debug import DebuggedApplication
 
 #TODO:Web sockets problem with debug:
 '''
-WebSocket connection to 'ws://localhost:5000/subscriptions' failed: Error during WebSocket handshake:
+WebSocket connection to 'ws://localhost:8000/subscriptions' failed: Error during WebSocket handshake:
 Sent non-empty 'Sec-WebSocket-Protocol' header but no response was received
 '''
 def run_server(app, port):

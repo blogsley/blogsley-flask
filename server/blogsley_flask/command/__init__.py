@@ -12,7 +12,7 @@ import __blogsley__
 import blogsley_flask.pywsgi
 
 @click.group(cls=FlaskGroup)
-@click.option('--port', default=5000)
+@click.option('--port', default=8000)
 @pass_script_info
 def cli(info, port):
     port = os.environ.get("BLOGSLEY_PORT") or port
